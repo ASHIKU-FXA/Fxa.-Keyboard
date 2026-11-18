@@ -1,0 +1,73 @@
+name: mukto_keyboard
+description: >
+  মুক্ত কিবোর্ড — A production-ready, privacy-first Bangla keyboard for Android.
+  Hybrid Flutter UI + Native Kotlin IME Engine.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+  flutter: '>=3.22.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ─── State Management ─────────────────────────────────────────
+  provider: ^6.1.2
+
+  # ─── Local Storage & Persistence ──────────────────────────────
+  shared_preferences: ^2.3.2
+  sqflite: ^2.3.3+1
+  path_provider: ^2.1.4
+
+  # ─── UI & Theming ─────────────────────────────────────────────
+  flutter_colorpicker: ^1.1.0
+  google_fonts: ^6.2.1
+
+  # ─── Navigation ───────────────────────────────────────────────
+  go_router: ^14.2.7
+
+  # ─── System / Device Integration ──────────────────────────────
+  permission_handler: ^11.3.1
+  app_settings: ^5.1.1          # Opens system Settings directly (IME enable)
+  package_info_plus: ^8.1.0
+  device_info_plus: ^10.1.2
+
+  # ─── File & Media (OCR image input) ───────────────────────────
+  image_picker: ^1.1.2
+  file_picker: ^8.1.2
+
+  # ─── Internationalization ─────────────────────────────────────
+  intl: ^0.19.0
+
+  # ─── Utilities ────────────────────────────────────────────────
+  url_launcher: ^6.3.0
+  collection: ^1.19.0
+  equatable: ^2.0.5             # Clean model equality checks
+
+  # ─── Animations ───────────────────────────────────────────────
+  lottie: ^3.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.13
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/animations/
+    - assets/images/
+
+  fonts:
+    - family: NikoshBAN
+      fonts:
+        - asset: assets/fonts/NikoshBAN.ttf
+          weight: 400
+    - family: SolaimanLipi
+      fonts:
+        - asset: assets/fonts/SolaimanLipi.ttf
+          weight: 400
