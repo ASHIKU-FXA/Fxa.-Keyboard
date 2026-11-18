@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PERMISSIONS
+         ═══════════════════════════════════════════════════════════ -->
+
+    <!-- Haptic feedback on key press -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Restore clipboard history and prefs after reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Voice Typing: Bangla & English speech recognition -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- OCR: pick image from camera or gallery -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Media read — API ≤ 32 -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- Media read — API 33+ (granular media permissions) -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        android:minSdkVersion="33" />
+
+    <!-- Foreground notification for voice typing indicator -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         APPLICATION
+         ═══════════════════════════════════════════════════════════ -->
+    <application
+        android:name="${applicationName}"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:theme="@style/LaunchTheme"
+        android:hardwareAccelerated="true"
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="34">
+
+        <!-- ───────────────────────────────────────────────────────
+             MAIN FLUTTER ACTIVITY
+             ─────────────────────────────────────────────────────── -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+
+            <!-- LAUNCHER intent — app icon on home screen -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Deep link: open settings screen from notification -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="mukto"
+                    android:host="settings" />
+            </intent-filter>
+        </activity>
+
+        <!-- ───────────────────────────────────────────────────────
+             MUKTO KEYBOARD — INPUT METHOD SERVICE
+             This is the heart of the entire project.
+
+             android:permission="BIND_INPUT_METHOD" ensures only
+             the Android system can bind to this service.
+             android:directBootAware="true" lets the IME work on
+             the lock screen before the user unlocks the device.
+             ─────────────────────────────────────────────────────── -->
+        <service
+            android:name=".keyboard.MuktoInputMethodService"
+            android:label="@string/keyboard_name"
+            android:exported="true"
+            android:directBootAware="true"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+
+            <!-- Priority 100 makes Mukto appear first in IME picker -->
+            <intent-filter android:priority="100">
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+
+            <!-- Points to res/xml/method.xml for subtype declarations -->
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
+
+        <!-- ───────────────────────────────────────────────────────
+             KEYBOARD SETTINGS ACTIVITY
+             Launched from the keyboard toolbar gear icon,
+             opens the Flutter settings screen in a new task so
+             it doesn't interfere with the host app.
+             ─────────────────────────────────────────────────────── -->
+        <activity
+            android:name=".KeyboardSettingsActivity"
+            android:exported="false"
+            android:theme="@style/NormalTheme"
+            android:launchMode="singleTask"
+            android:excludeFromRecents="true"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" />
+
+        <!-- ───────────────────────────────────────────────────────
+             BOOT RECEIVER
+             Triggers after BOOT_COMPLETED and LOCKED_BOOT_COMPLETED
+             to restore Room DB and SharedPreferences in direct-boot
+             protected storage before the user unlocks.
+             ─────────────────────────────────────────────────────── -->
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:exported="true"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
