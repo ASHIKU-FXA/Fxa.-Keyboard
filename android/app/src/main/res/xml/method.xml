@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    method.xml — Mukto Keyboard IME Subtype Declarations
+    ══════════════════════════════════════════════════════
+    Each <subtype> registers a distinct input mode in the system
+    IME picker. Users can cycle through these with the globe key.
+
+    imeSubtypeLocale  → BCP-47 locale tag used for spellcheck & voice
+    imeSubtypeMode    → always "keyboard" for text input
+    imeSubtypeExtraValue → comma-separated capability flags:
+        AsciiCapable              — layout can produce ASCII (Avro, QWERTY)
+        SupportTouchPositionCorrection — enables swipe-based correction
+        VoiceCapable              — shows microphone affordance in toolbar
+        EmojiCapable              — layout surfaces emoji panel affordance
+-->
+<input-method
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="com.mukto.keyboard.KeyboardSettingsActivity"
+    android:supportsSwitchingToNextInputMethod="true"
+    android:isVrOnly="false">
+
+    <!-- ─── Bangla: Avro Phonetic ─────────────────────────────────
+         The default and most popular layout. Users type in English
+         romanisation; the AvroPhoneticEngine converts in real-time.
+         AsciiCapable=true because physical input is English ASCII.    -->
+    <subtype
+        android:label="@string/subtype_bangla_avro"
+        android:icon="@drawable/ic_subtype_bn"
+        android:imeSubtypeLocale="bn-BD"
+        android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="false"
+        android:overridesImplicitlyEnabledSubtype="true"
+        android:imeSubtypeExtraValue="AsciiCapable,SupportTouchPositionCorrection,VoiceCapable,KeyboardLayoutSet=avro_phonetic" />
+
+    <!-- ─── Bangla: Probhat Fixed Layout ─────────────────────────
+         Standard phonetically-mapped fixed Bangla layout.
+         Each key directly produces a Bangla character.              -->
+    <subtype
+        android:label="@string/subtype_bangla_probhat"
+        android:icon="@drawable/ic_subtype_bn"
+        android:imeSubtypeLocale="bn-BD"
+        android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="false"
+        android:imeSubtypeExtraValue="SupportTouchPositionCorrection,VoiceCapable,KeyboardLayoutSet=probhat" />
+
+    <!-- ─── Bangla: National (জাতীয়) Layout ─────────────────────
+         The Bangladesh Standard (BDS 1520) national keyboard layout
+         as defined by the Bangladesh Computer Council.               -->
+    <subtype
+        android:label="@string/subtype_bangla_national"
+        android:icon="@drawable/ic_subtype_bn"
+        android:imeSubtypeLocale="bn-BD"
+        android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="false"
+        android:imeSubtypeExtraValue="SupportTouchPositionCorrection,VoiceCapable,KeyboardLayoutSet=national" />
+
+    <!-- ─── Bangla: Bijoy Unicode ─────────────────────────────────
+         Bijoy-compatible Unicode layout for users migrating from
+         legacy Bijoy encoding. Shift layer mirrors Bijoy mappings.  -->
+    <subtype
+        android:label="@string/subtype_bangla_bijoy"
+        android:icon="@drawable/ic_subtype_bn"
+        android:imeSubtypeLocale="bn-BD"
+        android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="false"
+        android:imeSubtypeExtraValue="SupportTouchPositionCorrection,VoiceCapable,KeyboardLayoutSet=bijoy_unicode" />
+
+    <!-- ─── English: QWERTY ───────────────────────────────────────
+         Standard English QWERTY with optional number row.
+         Marked as overridesImplicitlyEnabled so it appears even if
+         the system would skip it based on locale.                   -->
+    <subtype
+        android:label="@string/subtype_english"
+        android:icon="@drawable/ic_subtype_en"
+        android:imeSubtypeLocale="en-US"
+        android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="false"
+        android:overridesImplicitlyEnabledSubtype="true"
+        android:imeSubtypeExtraValue="AsciiCapable,SupportTouchPositionCorrection,VoiceCapable,KeyboardLayoutSet=qwerty" />
+
+    <!-- ─── Arabic ────────────────────────────────────────────────
+         Right-to-left Arabic layout. The keyboard engine mirrors
+         key order and sets InputType RTL flag for the host field.   -->
+    <subtype
+        android:label="@string/subtype_arabic"
+        android:icon="@drawable/ic_subtype_ar"
+        android:imeSubtypeLocale="ar"
+        android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="false"
+        android:imeSubtypeExtraValue="SupportTouchPositionCorrection,VoiceCapable,KeyboardLayoutSet=arabic" />
+
+    <!-- ─── Emoji & Symbols ───────────────────────────────────────
+         Auxiliary subtype — not shown in the main IME picker list
+         (isAuxiliary=true), but accessible via the emoji key inside
+         any other layout. EmojiCapable flag signals panel support.  -->
+    <subtype
+        android:label="@string/subtype_emoji"
+        android:icon="@drawable/ic_subtype_emoji"
+        android:imeSubtypeLocale="en-US"
+        android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="true"
+        android:imeSubtypeExtraValue="EmojiCapable,KeyboardLayoutSet=emoji" />
+
+</input-method>
