@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Mukto Keyboard</string>
+    <string name="keyboard_name">মুক্ত কিবোর্ড (Mukto Keyboard)</string>
+    <string name="settings_activity_name">Mukto Keyboard Settings</string>
+
+    <!-- IME Subtype Labels (shown in system IME picker) -->
+    <string name="subtype_bangla_avro">বাংলা — অভ্র ফোনেটিক</string>
+    <string name="subtype_bangla_probhat">বাংলা — প্রভাত</string>
+    <string name="subtype_bangla_national">বাংলা — জাতীয়</string>
+    <string name="subtype_bangla_bijoy">বাংলা — বিজয় ইউনিকোড</string>
+    <string name="subtype_english">English — QWERTY</string>
+    <string name="subtype_arabic">عربي — Arabic</string>
+    <string name="subtype_emoji">Emoji &amp; Symbols</string>
+
+    <!-- Notification channels (voice typing) -->
+    <string name="voice_notification_channel_id">mukto_voice_typing</string>
+    <string name="voice_notification_channel_name">Voice Typing</string>
+    <string name="voice_notification_title">মুক্ত কিবোর্ড is listening…</string>
+    <string name="voice_notification_text">Tap to stop voice input</string>
+</resources>
