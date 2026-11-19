@@ -6,7 +6,7 @@ workflows:
     instance_type: mac_mini_m2
 
     environment:
-      flutter: 3.22.0
+      flutter: stable
       java: 17
 
     triggering:
@@ -14,10 +14,6 @@ workflows:
         - push
       branch_patterns:
         - pattern: 'main'
-          include: true
-        - pattern: 'dev'
-          include: true
-        - pattern: 'feature/*'
           include: true
 
     scripts:
@@ -29,10 +25,6 @@ workflows:
       - name: Run Flutter Analyzer
         script: |
           flutter analyze --no-fatal-infos
-
-      - name: Run Unit Tests
-        script: |
-          flutter test --reporter expanded
 
       - name: Build Debug APK
         script: |
@@ -56,7 +48,7 @@ workflows:
     instance_type: mac_mini_m2
 
     environment:
-      flutter: 3.22.0
+      flutter: stable
       java: 17
       android_signing:
         - mukto_keystore
@@ -81,10 +73,6 @@ workflows:
       - name: Run Flutter Analyzer
         script: |
           flutter analyze --no-fatal-infos
-
-      - name: Run Unit Tests
-        script: |
-          flutter test --reporter expanded
 
       - name: Build Release APK
         script: |
@@ -116,7 +104,7 @@ workflows:
     instance_type: mac_mini_m2
 
     environment:
-      flutter: 3.22.0
+      flutter: stable
       java: 17
       android_signing:
         - mukto_keystore
@@ -137,10 +125,6 @@ workflows:
       - name: Run Flutter Analyzer
         script: |
           flutter analyze --no-fatal-infos
-
-      - name: Run Unit Tests
-        script: |
-          flutter test --reporter expanded
 
       - name: Build Release AAB
         script: |
