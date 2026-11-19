@@ -1,7 +1,6 @@
 name: mukto_keyboard
 description: >
   মুক্ত কিবোর্ড — A production-ready, privacy-first Bangla keyboard for Android.
-  Hybrid Flutter UI + Native Kotlin IME Engine.
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -40,17 +39,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  assets:
-    - assets/animations/
-    - assets/images/
-
-  fonts:
-    - family: NikoshBAN
-      fonts:
-        - asset: assets/fonts/NikoshBAN.ttf
-          weight: 400
-    - family: SolaimanLipi
-      fonts:
-        - asset: assets/fonts/SolaimanLipi.ttf
-          weight: 400
