@@ -1,83 +1,16 @@
-workflows:
-
-  android-debug:
-    name: Android Debug APK
-    max_build_duration: 60
-    instance_type: mac_mini_m2
-
-    environment:
-      flutter: stable
-      java: 17
-
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: 'main'
-          include: true
-
     scripts:
       - name: Set up Flutter SDK
         script: |
-          flutter --version
           flutter pub get
 
-      - name: Fix Android v2 Embedding
+      - name: Create Fresh Android
         script: |
-          mkdir -p android/app/src/main/kotlin/com/mukto/keyboard
-
-          cat > android/app/src/main/kotlin/com/mukto/keyboard/MainActivity.kt << 'MAINEOF'
-          package com.mukto.keyboard
-          import io.flutter.embedding.android.FlutterActivity
-          class MainActivity : FlutterActivity()
-          MAINEOF
-
-          cat > android/app/src/main/AndroidManifest.xml << 'MANIFESTEOF'
-          <?xml version="1.0" encoding="utf-8"?>
-          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-              <uses-permission android:name="android.permission.VIBRATE"/>
-              <application
-                  android:label="Mukto Keyboard"
-                  android:name="${applicationName}"
-                  android:icon="@mipmap/ic_launcher">
-                  <meta-data
-                      android:name="flutterEmbedding"
-                      android:value="2"/>
-                  <activity
-                      android:name=".MainActivity"
-                      android:exported="true"
-                      android:launchMode="singleTop"
-                      android:theme="@style/LaunchTheme"
-                      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-                      android:hardwareAccelerated="true"
-                      android:windowSoftInputMode="adjustResize">
-                      <meta-data
-                          android:name="io.flutter.embedding.android.NormalTheme"
-                          android:resource="@style/NormalTheme"/>
-                      <intent-filter>
-                          <action android:name="android.intent.action.MAIN"/>
-                          <category android:name="android.intent.category.LAUNCHER"/>
-                      </intent-filter>
-                  </activity>
-              </application>
-          </manifest>
-          MANIFESTEOF
-
-      - name: Run Flutter Analyzer
-        script: |
-          flutter analyze --no-fatal-infos || true
+          flutter create \
+            --platforms=android \
+            --org=com.mukto \
+            --project-name=mukto_keyboard \
+            --overwrite .
 
       - name: Build Debug APK
         script: |
           flutter build apk --debug
-
-    artifacts:
-      - build/app/outputs/flutter-apk/app-debug.apk
-
-    publishing:
-      email:
-        recipients:
-          - ashikurfxa@gmail.com
-        notify:
-          success: true
-          failure: true
